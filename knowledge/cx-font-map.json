@@ -1,0 +1,18 @@
+{
+  "$comment": "chaoxing 混淆字体（font-cxsecret）「字形→真实字符」映射表。key=混淆字形字符，value=真实字符。由 scripts/fontmap-merge.mjs 从「作答前乱码 + 提交后明文」自举生成（提交后页面明文显示题干与正确答案——实测明文通道），只追加/投票，不手改。用法见 knowledge/chaoxing.md §12。",
+  "platform": "chaoxing",
+  "fontTag": "font-cxsecret",
+  "updatedAt": null,
+  "stats": {
+    "lines": 0,
+    "pairs": 5
+  },
+  "seedNote": "页内自举映射种子。混淆码位可能按页变化，使用前核验当前页；冲突由合并工具打印供复核。",
+  "entries": {
+    "弨": "的",
+    "弤": "球",
+    "妶": "径",
+    "廲": "电",
+    "彚": "两"
+  }
+}
