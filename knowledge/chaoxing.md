@@ -175,15 +175,14 @@
 
 ## 11. 锁速课程场景（倍速锁定 + 中途弹题 + 观后题）【实测 】
 
-> 验证课程：《示例课程13》（60/60 完成）、《示例课程11》（进行中）。
-> 原始样本见 docs/field-notes.md <运行日期> 条目。
+> 通用故障与配方见 docs/field-notes.md。
 
 ### 11.1 结构与完成口径
 - 新版目录：`mooc2-ans.chaoxing.com/mooc2-ans/mycourse/stu` → 章节 iframe `#frame_content-zj`
   → 行 `.chapter_item#cur{chapterId}`（`onclick="toOld('courseid','chapterId','clazzid',0)"`，
   小节名在 `title` 属性）；**两代布局并存**，旧布局为 `.posCatalog_select`，两者都要试。
   点击一律程序化 `el.click()`。
-- 学习页：`mooc1.chaoxing.com/mycourse/studentstudy?chapterId=…`；**每个小节 = 页签
+- 学习页：`mooc1.chaoxing.com/mycourse/studentstudy?chapterId={chapterId}`；**每个小节 = 页签
   「1 视频」+「2 章节测验」**（2 个任务点）；"下一节"是新版**页内翻页**（不是旧版
   `#prevNextFocusNext`）。
 - 完成口径（cards 页原文）：「观看时长需 ≥ 总时长的 90%（未完成任务点前，当前视频不可拖拽、
@@ -304,7 +303,7 @@
   **上一节遗留的旧播放器**并在错误的 video 上播满整段：信标 `t` 正常增长、「播放完成」正常打印，
   但**平台侧没有本节心跳、任务点不动**（该节不计分，章节树计数不降）。
 - **播前必做身份校验**：`video.currentSrc` 必须含本节 `mArg.attachments[].objectId` 的片段
-  （本例 `…/b28ddb210ba0dee246d37/sd.mp4?at_=…`）；**不要用「时长相同/接近」当判据** ——
+  （本例 `…/<objectId>/sd.mp4?at_=…`）；**不要用「时长相同/接近」当判据** ——
   同一课程相邻两节时长可能只差 1s（1324s / 1323s）。
 - 起播口径：首帧 `readyState=0`、`networkState=1`、大播放按钮 `.vjs-big-play-button` 可见；
   **脚本 `v.play()`（`muted=false` + `volume=0.001`，同 §11.2 省电暂停口径）即可加载并起播**，

@@ -4,6 +4,16 @@
 > 核心卖点不是"刷得快"，而是"刷得稳"：真实播放、风控感知、异常才叫人；
 > **默认无头 Runner，不占用你的电脑；登录自适应（凭据登录前获取、通道自动降级）。**
 
+## 新版独立技能 course-study-v2
+
+本仓库同时收录 [course-study-v2](course-study-v2/README.md)，版本 **2.0.0-preview.9**。
+新版包含 Codex/ZCode 适配、任务巡检与断点恢复、混淆字体读题、作业取题与交付工具、媒体与弹题守卫、独立安装及隐私导出。
+请先读 [使用说明](course-study-v2/README.md) 和 [验证边界](course-study-v2/references/validation.md)，明确调用 `$course-study-v2` 后使用。
+
+新版安装入口是 `course-study-v2/SKILL.md`；仓库根目录的 `SKILL.md` 继续对应下文旧版。
+公开包排除私人凭据、姓名、学校、班级、学号、课程实例、截图、浏览器配置和本机运行日志；本机开发 Git 历史不随新版包上传。
+现有仓库的公开来源与 MIT 许可保留，旧 Git 历史不会被普通提交改写。
+
 ## 定位
 
 GitHub 上刷课工具很多（API 伪造心跳的 CLI、油猴脚本、AI 答题），但几乎全部以

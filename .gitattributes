@@ -1,0 +1,2 @@
+# Preserve exact public package bytes for manifest verification.
+course-study-v2/** -text
