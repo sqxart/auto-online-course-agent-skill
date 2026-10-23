@@ -45,6 +45,7 @@ description: 仅当用户明确选择 course-study-v2 或“新版课程助手�
 
 - [题面采集](scripts/collect_questions.js)：仅在当前工具允许页面脚本时，在已打开且已授权的题目帧读取DOM和内嵌字体。
 - [离线读题](scripts/question_reader.py)：`doctor` / `render` / `ocr`；见 `--help`，只输出题面及复核材料。
+- 字幕复用、逐选项原文预检和 OCR 漏题补读：遇到缺证据、混淆题面或反复取材时读 [证据与效率](references/evidence-efficiency.md)，不把词面命中当答案证明。
 - [列表采集](scripts/collect_task_list.js)：只读当前已加载任务列表；不点击、导航、播放或提交。
 - [采集函数生成](scripts/browser_payload.py)：生成 page/element evaluate 函数，通过显式参数传入来源与选择器，不写页面全局变量。
 - [巡检对比](scripts/inspect_tasks.py)：`summary --input ...`、`diff --before ... --after ... --out ...`。
@@ -53,7 +54,7 @@ description: 仅当用户明确选择 course-study-v2 或“新版课程助手�
 - Codex 当前视频静音与播放控件操作见 [Codex适配](adapters/codex.md)，使用独立脚本；ZCode 保留自身原有播放与静音路径。
 - Codex 续跑、紧凑观察与视口/最小化验证见 [Codex运行说明](references/codex-runtime.md)；观察只读，动作与平台完成分别验收。
 - [Harness探针](scripts/dsh_probe.py)：`--tools` 读当前工具清单，报告技能发现根、安装副本漂移和浏览器候选；
-  只读文件系统，不联网、不打开页面。DeepSeek 当前工具面与无浏览器通道时的边界见 [DeepSeek适配](adapters/deepseek.md)。
+  支持整包清单自检与 `--require-discovered/--require-winner/--require-clean`。只读文件系统，不联网、不打开页面；DeepSeek 外部浏览器通道与独立技能边界见 [DeepSeek适配](adapters/deepseek.md)。
 
 题面和列表的采集函数不自动执行，调用方式及契约见 [工具数据格式](references/tool-data.md)。用新批次隔离题面和字体；
 工具失败可回到当前明文、受支持截图或人工复核，不能把旧题图当成成功读题。

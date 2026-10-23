@@ -6,8 +6,9 @@
 
 ## 新版独立技能 course-study-v2
 
-本仓库同时收录 [course-study-v2](course-study-v2/README.md)，版本 **2.0.0-preview.9**。
-新版包含 Codex/ZCode 适配、任务巡检与断点恢复、混淆字体读题、作业取题与交付工具、媒体与弹题守卫、独立安装及隐私导出。
+本仓库同时收录 [course-study-v2](course-study-v2/README.md)，版本 **2.0.0-preview.10**。
+新版包含 Codex/ZCode/DSH 适配、任务巡检与断点恢复、混淆字体读题、作业取题与交付工具、媒体与弹题守卫、独立安装及隐私导出。
+preview.10 更新了 DSH 外部 Chrome/MCP 流程、整包安装校验、单次 OCR 补读和选项证据预检，并精简 Codex 事务请求；真实 token 与整课耗时节省仍待对照验证。
 请先读 [使用说明](course-study-v2/README.md) 和 [验证边界](course-study-v2/references/validation.md)，明确调用 `$course-study-v2` 后使用。
 
 新版安装入口是 `course-study-v2/SKILL.md`；仓库根目录的 `SKILL.md` 继续对应下文旧版。

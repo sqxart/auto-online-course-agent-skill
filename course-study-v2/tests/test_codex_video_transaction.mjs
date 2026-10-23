@@ -156,5 +156,38 @@ try {
   assert.equal(log.includes('PRIVATE'), false);
   const rows = log.trim().split('\n').map(JSON.parse);
   assert.equal(rows[0].actual_tokens, null); assert.equal(rows[1].result.action_may_have_occurred, true); checks += 8;
+
+  const packets = [], pending = [];
+  const batched = await createCodexSession({ skillRoot: root, runDir: temp,
+    cdp: { send(method, params) {
+      packets.push(params.expression);
+      return new Promise(resolve => pending.push(resolve));
+    } } });
+  const first = batched.run('watch', {});
+  const overlapping = await batched.run('answer', {});
+  assert.equal(overlapping.reason, 'transaction-in-flight'); assert.equal(packets.length, 1);
+  assert.ok(packets[0].includes('function observeCourseVideo'));
+  assert.equal(packets[0].includes('function muteCourseVideo'), false);
+  assert.equal(packets[0].includes('function videoQuizAction'), false);
+  assert.equal(packets[0].includes('mute:('), false); assert.equal(packets[0].includes('quiz:('), false);
+  const detailMarker = 'DO_NOT_RESEND_OLD_QUESTION';
+  pending.shift()({ result: { value: { ok: true, reason: 'quiz', observation: { ok: true,
+    identity_ok: true, scope: 'scope-a', quiz: { visible: true, state: 'question', signature: 'digest-a' },
+    details: { question: detailMarker } } } } });
+  assert.equal((await first).details.question, detailMarker);
+  const second = batched.run('start', {});
+  assert.equal(packets[1].includes(detailMarker), false);
+  assert.ok(packets[1].includes('"signature":"digest-a"'));
+  assert.ok(packets[1].includes('mute:(')); assert.equal(packets[1].includes('quiz:('), false);
+  pending.shift()({ result: { value: { ok: true, reason: 'deadline' } } });
+  await second;
+  const third = batched.run('answer', {});
+  assert.ok(packets[2].includes('quiz:(')); assert.equal(packets[2].includes('mute:('), false);
+  pending.shift()({ result: { value: { ok: true, reason: 'continued' } } });
+  await third;
+  assert.equal((await batched.run('invalid', {})).reason, 'INVALID_TRANSACTION_OPTIONS');
+  assert.equal((await batched.run('watch', {}, { budget_ms: NaN })).reason, 'INVALID_TRANSACTION_OPTIONS');
+  assert.equal(packets.length, 3);
+  checks += 17;
 } finally { await fs.rm(temp, { recursive: true, force: true }); }
 console.log(`PASS ${checks} Codex transaction assertions: cleanup, budgets, identity failure, result accuracy, single submission and transport uncertainty.`);

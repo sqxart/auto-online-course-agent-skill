@@ -103,7 +103,7 @@ def main(argv=None):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
             records.append({'path': relative.as_posix(), 'sha256': hashlib.sha256(target.read_bytes()).hexdigest()})
-        manifest = {'skill': 'course-study-v2', 'version': '2.0.0-preview.9',
+        manifest = {'skill': 'course-study-v2', 'version': '2.0.0-preview.10',
                     'kind': args.command, 'includes_private_metadata': args.command == 'install' and args.include_local,
                     'files': records,
                     'note': 'Public export excludes local/runs/profiles/validation. Basic scans do not replace manual identity/secret review. No GitHub upload.'}

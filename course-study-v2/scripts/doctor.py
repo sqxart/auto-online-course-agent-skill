@@ -25,7 +25,7 @@ def version(command):
 def main():
     root = Path(__file__).resolve().parent.parent
     result = {
-        'skill': 'course-study-v2', 'version': '2.0.0-preview.9',
+        'skill': 'course-study-v2', 'version': '2.0.0-preview.10',
         'python': {'path': sys.executable, 'version': sys.version.split()[0]},
         'node': version('node'), 'typst': version('typst'),
         'reader': question_reader.doctor(),
